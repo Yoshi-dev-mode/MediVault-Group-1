@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="logo"><i class="fa-solid fa-stethoscope" style="margin-right: 10px;"></i>MediVault</div>
+
+            <div class="subtitle">
+                Secure Medical Records System
+            </div>
+
+            <form action="/register" method="POST">
+
+                <div class="input-group">
+                    <label>ID No.</label>
+
+                    <input type="text" name="id_no" id="id_no" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" name="full_name" id="full_name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required>
+                </div>
+
+                <button type="button" class="btn" onclick="registerUser()">
+                    Register
+                </button>
+                <p class="no-account">Already have an account? <a href="/">Login</a></p>
+            </form>
+
+        </div>
+
+    </div>
+    <script>
+
+        async function registerUser() {
+            // 1. Get elements
+            const id_no = document.getElementById("id_no").value;
+            const full_name = document.getElementById("full_name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirm_password = document.getElementById("confirm_password").value;
+
+            // 2. Client-side validation: Match passwords BEFORE sending to server
+            if (password !== confirm_password) {
+                alert("Passwords do not match!");
+                return; // Stop the function here
+            }
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id_no: id_no,
+                        full_name: full_name,
+                        email: email,
+                        password: password
+                    })
+                });
+
+                // 3. Check if the response is actually OK (status 200-299)
+                if (!response.ok) {
+                    throw new Error("Server connection failed");
+                }
+
+                const data = await response.json();
+                alert(data.message);
+
+                if (data.success) {
+                    window.location.href = "/"; // Redirect to login
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Please check your connection.");
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

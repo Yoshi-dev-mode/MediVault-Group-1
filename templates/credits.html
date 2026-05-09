@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>MediVault - Credits</title>
+    <style>
+        .credits-container { padding: 40px; max-width: 800px; margin: auto; }
+        .group-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .member-list { list-style: none; padding: 0; margin-top: 20px; }
+        .member-list li { padding: 10px 0; border-bottom: 1px solid #eee; display: flex; align-items: center; }
+        .member-list i { margin-right: 15px; color: #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2><i class="fa-solid fa-stethoscope" style="margin-right: 10px;"></i>MediVault</h2>
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fa-solid fa-chart-bar" style="margin-right: 10px;"></i> Dashboard</a></li>
+                <li class="active"><a href="/credits"><i class="fa-regular fa-user" style="margin-right: 10px;"></i> Credits</a></li>
+                <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 10px;"></i>Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="credits-container">
+                <div class="group-card">
+                    <h1 style="color: #1e3a8a"><i class="fa-solid fa-layer-group" style="margin-right: 10px;"></i> Development Team</h1>
+                    <p style="color: #64748b; margin-bottom: 20px;">This project was developed for CPEE 401 - Cognate / Elective Course 1</p>
+                    <h3 style="color: #1e3a8a">Group 1</h2>
+                    <ul class="member-list">
+                        <li><i class="fa-solid fa-user-gear"></i>Aranas, Evangel Yoshiya G.</li>
+                        <li><i class="fa-solid fa-user-pen"></i>Barrion, Lindsay Amerie C.</li>
+                        <li><i class="fa-solid fa-user-shield"></i>Bueno, John Melvin C.</li>
+                        <li><i class="fa-solid fa-user"></i>Linga, Jethro Emmanuel M.</li>
+                        <li><i class="fa-solid fa-user"></i>Manguiat, Adrian R.</li>
+                        <li><i class="fa-solid fa-user"></i>Montalbo, Von Kirby S.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

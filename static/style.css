@@ -1,0 +1,337 @@
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+          background: #f4f8ff;
+          color: #0f172a;
+      }
+
+      /* ================= LOGIN PAGE ================= */
+
+      .auth-container {
+          width: 100%;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: linear-gradient(135deg, #2563eb, #1e3a8a);
+          padding: 20px;
+      }
+
+      .auth-card {
+          width: 400px;
+          background: white;
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .logo {
+          text-align: center;
+          margin-bottom: 10px;
+          font-size: 32px;
+          font-weight: 700;
+          color: #2563eb;
+      }
+
+      .subtitle {
+          text-align: center;
+          margin-bottom: 30px;
+          color: #64748b;
+      }
+
+      .input-group {
+          margin-bottom: 18px;
+      }
+
+      .input-group label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 500;
+      }
+
+      .input-group input {
+          width: 100%;
+          padding: 14px;
+          border: 1px solid #cbd5e1;
+          border-radius: 12px;
+          outline: none;
+          transition: 0.3s;
+      }
+
+      .input-group input:focus {
+          border-color: #2563eb;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .btn {
+          width: 100%;
+          padding: 14px;
+          border: none;
+          border-radius: 12px;
+          background: #1e3a8a;
+          color: white;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+
+      .btn:hover {
+          background: #1d4ed8;
+      }
+
+      .switch-text {
+          text-align: center;
+          margin-top: 20px;
+          color: #64748b;
+      }
+
+      .switch-text span {
+          color: #2563eb;
+          font-weight: 600;
+          cursor: pointer;
+      }
+
+      .no-account {
+          margin-top: 16px;
+      }
+
+      /* ================= DASHBOARD ================= */
+
+      .dashboard {
+          display: flex;
+          min-height: 100vh;
+      }
+
+      /* Sidebar */
+
+      .sidebar {
+          width: 260px;
+          background: #1e3a8a;
+          color: white;
+          padding: 30px 20px;
+      }
+
+      .sidebar h2 {
+          text-align: center;
+          margin-bottom: 40px;
+          font-size: 28px;
+      }
+
+      .nav-links {
+          list-style: none;
+      }
+
+      .nav-links li {
+          margin-bottom: 15px;
+      }
+
+      .nav-links a {
+          display: block;
+          text-decoration: none;
+          color: white;
+          padding: 14px;
+          border-radius: 12px;
+          transition: 0.3s;
+      }
+
+      .nav-links a:hover {
+          background: rgba(255, 255, 255, 0.15);
+      }
+
+      /* Main Content */
+
+      .main-content {
+          flex: 1;
+          padding: 30px;
+      }
+
+      .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+      }
+
+      .header h1 {
+          color: #1e3a8a;
+      }
+
+      /* Cards */
+
+      .cards {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 20px;
+          margin-bottom: 15px;
+      }
+
+      .card {
+          background: white;
+          padding: 25px;
+          border-radius: 18px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .card h3 {
+          color: #64748b;
+          margin-bottom: 10px;
+      }
+
+      .card p {
+          font-size: 28px;
+          font-weight: 700;
+          color: #1e3a8a;
+      }
+
+      /* Form */
+
+      .form-section {
+          background: white;
+          padding: 30px;
+          border-radius: 20px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+          margin-bottom: 35px;
+      }
+
+      .form-section h2 {
+          margin-bottom: 25px;
+          color: #1e3a8a;
+      }
+
+      .form-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+      }
+
+      .form-grid input,
+      .form-grid textarea,
+      .form-grid select {
+          width: 100%;
+          padding: 14px;
+          border: 1px solid #cbd5e1;
+          border-radius: 12px;
+          outline: none;
+      }
+
+      .form-grid textarea {
+          resize: none;
+          height: 120px;
+      }
+
+      /* Table */
+
+      .table-section {
+          background: white;
+          padding: 30px;
+          border-radius: 20px;
+          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .table-section h2 {
+          margin-bottom: 20px;
+          color: #1e3a8a;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+
+      table th {
+          background: #1e3a8a;
+          color: white;
+          padding: 15px;
+          text-align: left;
+      }
+
+      table td {
+          padding: 15px;
+          border-bottom: 1px solid #e2e8f0;
+      }
+
+      table tr:hover {
+          background: #eff6ff;
+          cursor: pointer;
+      }
+
+      /* Responsive */
+
+      @media(max-width:900px) {
+
+          .dashboard {
+              flex-direction: column;
+          }
+
+          .sidebar {
+              width: 100%;
+          }
+
+      }
+
+      .critical-row {
+          background-color: #ffeded !important;
+          /* Light red */
+      }
+
+      .critical-row td {
+          color: #c0392b;
+          /* Dark red text */
+      }
+
+      .cell-link:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+          /* Slight grey on hover */
+      }
+
+      /* FILTER DESIGNS */
+      .filter-buttons {
+          display: flex;
+          gap: 10px;
+      }
+
+      .filter-btn {
+          padding: 8px 15px;
+          border: 1px solid #1e3a8a;
+          background: white;
+          color: #1e3a8a;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: 0.3s;
+      }
+
+      .filter-btn.active {
+          background: #2563eb;
+          color: white;
+      }
+
+      .filter-btn:hover {
+          background: #f0f4ff;
+      }
+
+      .edit-input {
+          border: none;
+          background: transparent;
+          outline: none;
+          padding: 5px;
+          color: #1e293b;
+      }
+
+      .edit-input[readonly] {
+          pointer-events: none;
+          /* User can't click it */
+      }
+
+      /* Make dropdown look like text when disabled */
+      select.edit-input:disabled {
+          appearance: none;
+          -webkit-appearance: none;
+          color: #1e293b;
+          opacity: 1;
+      }

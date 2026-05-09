@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+
+        <div class="sidebar">
+
+            <h2><i class="fa-solid fa-stethoscope" style="margin-right: 10px;"></i>MediVault</h2>
+
+            <ul class="nav-links">
+                <li><a href="/dashboard"><i class="fa-solid fa-chart-bar" style="margin-right: 10px;"></i> Dashboard</a></li>
+                <li><a href="/credits"><i class="fa-regular fa-user" style="margin-right: 10px;"></i>Credits</a></li>
+                <li><a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 10px;"></i>Logout</a></li>
+            </ul>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="main-content">
+
+            <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h1><i class="fa-solid fa-chart-bar" style="margin-right: 10px;"></i> Doctor Dashboard</h1>
+                <div class="user-info">
+                    <span style="font-weight: 500; color: #64748b;">Welcome,</span>
+                    <span style="font-weight: 700; color: #1e293b; font-size: 1.2rem;">Dr. {{ name }}</span>
+                </div>
+            </div>
+
+            <!-- Cards -->
+
+            <div class="cards">
+
+                <div class="cards">
+
+                    <div class="card">
+                        <h3>Total Patients</h3>
+                        <p>{{ total }}</p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Critical Patients</h3>
+                        <p style="color: {% if critical > 0 %}#e74c3c{% else %}inherit{% endif %}; font-weight: bold;">
+                            {{ critical }}
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3>Today's Checkups</h3>
+                        <p>{{ today }}</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Patient Form -->
+
+            <div class="form-section">
+
+                <h2>Add Patient Record</h2>
+
+                <form action="/add_patient" method="POST">
+                    <div class="form-grid">
+                        <input type="text" name="patient_name" placeholder="Patient Full Name" required>
+                        <select name="gender">
+                            <option value="">Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <input type="number" name="age" placeholder="Age" min="0" max="150">
+
+                        <input type="number" name="bp_diastolic" placeholder="Diastolic (Lower BP)">
+                        <input type="number" name="heart_rate" placeholder="Heart Rate (BPM)">
+
+                        <input type="number" name="blood_sugar" placeholder="Blood Sugar" min="0" max="999">
+                        <input type="number" step="0.1" name="bmi" placeholder="BMI" min="0" max="99.99">
+                        <input type="number" name="spo2" placeholder="SpO2" min="0" max="100">
+                        <input type="text" name="blood_pressure" placeholder="Systolic (Upper BP)">
+                        <textarea name="notes" placeholder="Diagnosis / Notes"></textarea>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn">Save Patient Record</button>
+                </form>
+                <br>
+            </div>
+
+            <!-- Table -->
+
+            <div class="table-section">
+
+                <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Patient Records</h2>
+
+                    <div class="filter-buttons">
+                        <button onclick="filterTable('all')" class="filter-btn active">All</button>
+                        <button onclick="filterTable('critical')" class="filter-btn">Critical Only</button>
+                        <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchPatients()"
+                            style="padding: 8px; border-radius: 5px; border: 1px solid #ccc; width: 250px;">
+                    </div>
+                </div>
+                <table id="patientTable">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Systolic</th>
+                            <th>Diastolic</th>
+                            <th>HR</th>
+                            <th>Sugar</th>
+                            <th>BMI</th>
+                            <th>SpO2</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        {% for record in records %}
+                        <tr class="{% if record[4]|int > 140 or record[6]|int < 95 %}critical-row{% endif %}">
+                            <td>{{ record[0] }}</td>
+                            <td>{{ record[1] }}</td>
+                            <td>{{ record[2] }}</td>
+                            <td>{{ record[3] }}</td>
+                            <td>{{ record[4] }}</td>
+                            <td>{{ record[5] }}</td>
+                            <td>{{ record[6] }}%</td>
+                            <td>{{ record[8]|default('No notes', true) }}</td>
+                            <td style="white-space: nowrap;">
+                                <a href="/delete_patient/{{ record[7] }}" onclick="return confirm('Are you sure?')"
+                                    style="color: #e74c3c; text-decoration: none; margin-right: 10px;"><i
+                                        class="fa-solid fa-trash"></i></a>
+
+                                <a href="/patient/{{ record[7] }}" style="color: #2ecc71; text-decoration: none;"><i
+                                        class="fa-solid fa-eye"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // 1. SEARCH FUNCTION
+        async function searchPatients() {
+            const query = document.getElementById('searchInput').value;
+
+            try {
+                const response = await fetch(`/api/search?q=${query}`);
+                const records = await response.json();
+
+                const tbody = document.getElementById('tableBody');
+                tbody.innerHTML = '';
+
+                records.forEach(row => {
+                    const isCritical = (parseInt(row.blood_sugar) > 140 || parseInt(row.spo2) < 95);
+                    const rowClass = isCritical ? 'critical-row' : '';
+
+                    // This template literal MUST match your <thead> order
+                    tbody.innerHTML += `
+            <tr class="${rowClass}">
+                <td style="padding: 0;">
+                    <a href="/patient/${row.id}" class="cell-link" style="display: block; padding: 12px 15px; text-decoration: none; color: inherit; font-weight: 600;">
+                        ${row.patient_name}
+                    </a>
+                </td>
+                <td>${row.bp_systolic}</td>
+                <td>${row.bp_diastolic}</td> <td>${row.heart_rate}</td>   <td>${row.blood_sugar}</td>
+                <td>${row.bmi}</td>
+                <td>${row.spo2}%</td>
+                <td>${row.notes || 'No notes'}</td>
+                <td>
+                    <a href="/delete_patient/${row.id}" onclick="return confirm('Are you sure?')"
+                       style="color: #e74c3c; text-decoration: none; margin-right: 10px;"><i class="fa-solid fa-trash"></i></a>
+                    <a href="/patient/${row.id}" style="color: #2ecc71; text-decoration: none;"><i class="fa-solid fa-eye"></i></a>
+                </td>
+            </tr>
+        `;
+                });
+            } catch (error) {
+                console.error("Search failed:", error);
+            }
+        }
+
+        // 2. FILTER FUNCTION (Moved outside!)
+        function filterTable(type) {
+            const rows = document.querySelectorAll('#tableBody tr');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update button styling
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Find the button that was clicked to add active class
+            if (event) {
+                event.target.classList.add('active');
+            }
+
+            rows.forEach(row => {
+                if (type === 'critical') {
+                    row.style.display = row.classList.contains('critical-row') ? '' : 'none';
+                } else {
+                    row.style.display = '';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
