@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # MediVault
 
 ## Clean-Slate Installation Manual
